@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@static/*": ["./public/static/images/*"]
+    }
+  }
+}

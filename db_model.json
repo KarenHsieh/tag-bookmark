@@ -1,0 +1,66 @@
+{
+  "users": [
+    {
+      "id": "user1",
+      "account": "Tom",
+      "password": "Tom123",
+      "token": "",
+      "lastLoginTime": ""
+    },
+    {
+      "id": "user2",
+      "account": "May",
+      "password": "May999",
+      "token": "",
+      "lastLoginTime": ""
+    }
+  ],
+  "bookmarks": {
+    "user1": [
+      {
+        "bookmarksId": 1,
+        "title": "前端三大框架比較",
+        "url": "http://前端三大框架比較.com.tw",
+        "tags": ["React", "Vue"]
+      },
+      {
+        "bookmarksId": 2,
+        "title": "如何開始學React",
+        "url": "http://如何開始學React.com.tw",
+        "tags": ["React", "ES6"]
+      }
+    ],
+    "user2": [
+      {
+        "bookmarksId": 1,
+        "title": "javascript面試常見問題",
+        "url": "http://javascript面試常見問題.com.tw",
+        "tags": ["javascript"]
+      }
+    ]
+  },
+  "tags": {
+    "React": [
+      {
+        "useId": "user1",
+        "bookmarksId": 1
+      },
+      {
+        "useId": "user1",
+        "bookmarksId": 2
+      }
+    ],
+    "Vue": [
+      {
+        "useId": "user1",
+        "bookmarksId": 1
+      }
+    ],
+    "javascript": [
+      {
+        "useId": "user2",
+        "bookmarksId": 1
+      }
+    ]
+  }
+}

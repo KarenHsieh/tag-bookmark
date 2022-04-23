@@ -11,3 +11,11 @@
 於是把目錄概念轉換成標籤  
 並可以使用標籤搜尋到符合的書籤  
 再點開來就可以看了
+
+| 功能       | 框架、技術、lib |
+| ---------- | :-------------: |
+| UI         |     chakra      |
+| 會員登入   |  firebase auth  |
+| server     |     koa.js      |
+| react 框架 |     next.js     |
+| database   |    firebase     |

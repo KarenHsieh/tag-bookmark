@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "server": "cross-env NODE_ENV=production node server.js"
+    "server": "cross-env NODE_ENV=development node server/app.js"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.7",
@@ -16,16 +16,21 @@
     "@emotion/styled": "^11",
     "@koa/router": "^10.1.1",
     "cross-env": "^7.0.3",
+    "firebase": "^9.6.11",
+    "firebase-admin": "^10.0.2",
     "framer-motion": "^6",
     "koa": "^2.13.4",
     "next": "12.1.5",
+    "passport": "^0.5.2",
     "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react-dom": "18.0.0",
+    "react-icons": "^4.3.1"
   },
   "devDependencies": {
     "eslint": "8.13.0",
     "eslint-config-next": "12.1.5",
     "eslint-config-prettier": "^8.5.0",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "sass": "^1.50.0"
   }
 }
