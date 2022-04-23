@@ -1,8 +1,3 @@
-// const firebase = require('firebase')
-
-import { initializeApp } from 'firebase/app'
-import { getDatabase } from 'firebase/database'
-
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,

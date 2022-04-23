@@ -1,5 +1,4 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import React, { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 
 import Layout from 'components/Layout'
@@ -29,6 +28,7 @@ import {
 } from '@chakra-ui/react'
 
 import { ExternalLinkIcon, ArrowForwardIcon } from '@chakra-ui/icons'
+import { async } from '@firebase/util'
 
 const links = [
   {
@@ -44,7 +44,13 @@ const links = [
     tags: ['Cache'],
   },
 ]
-export default function Home({ links }) {
+export default function Home({ bookmarks = [] }) {
+  const [links, setLinks] = useState(bookmarks)
+
+  // useEffect(() => {
+  //   setLinks(bookmarks)
+  // }, [links])
+
   const list = links.map(link => {
     const { id, title, url, tags } = link
 
@@ -72,6 +78,51 @@ export default function Home({ links }) {
     )
   })
 
+  const searchTag = async function () {
+    initializeApp(firebaseConfig)
+    const dbRef = ref(getDatabase())
+    const keyword = 'Vue'
+    const keywordCollection = await get(child(dbRef, `tags/${keyword}`))
+      .then(res => {
+        return res.val()
+      })
+      .catch(error => {
+        console.error(error)
+      })
+
+    const loginUserId = 'user1'
+    const bookmarksIdCollection = []
+    keywordCollection.filter(item => {
+      const { userId: allUserId, bookmarksId } = item
+
+      if (allUserId === loginUserId) {
+        bookmarksIdCollection.push(bookmarksId)
+      }
+    })
+
+    const result = []
+    await get(child(dbRef, `bookmarks/${loginUserId}`))
+      .then(res => {
+        res.forEach(data => {
+          const id = data.val().bookmarksId
+          if (bookmarksIdCollection.includes(id)) {
+            result.push(data.val())
+          }
+        })
+      })
+      .catch(error => {
+        console.error(error)
+      })
+
+    return result
+  }
+
+  const search = async () => {
+    const results = await searchTag()
+    console.log('search results', results)
+    setLinks(results)
+  }
+
   return (
     <Layout>
       <div className={styles.container}>
@@ -81,7 +132,7 @@ export default function Home({ links }) {
               <Input variant="filled" placeholder="標籤" size="lg" />
             </Box>
             <Box>
-              <Button colorScheme="teal" size="lg">
+              <Button colorScheme="teal" size="lg" onClick={search}>
                 搜尋
               </Button>
             </Box>
@@ -102,11 +153,11 @@ export async function getServerSideProps() {
   initializeApp(firebaseConfig)
   const db = getDatabase()
 
-  const userId = 'user1'
+  const loginUserId = 'user1'
 
-  const dbRef = ref(getDatabase())
+  const dbRef = ref(db)
 
-  const links = await get(child(dbRef, `bookmarks/${userId}`))
+  const bookmarks = await get(child(dbRef, `bookmarks/${loginUserId}`))
     .then(res => {
       return res.val()
     })
@@ -114,5 +165,5 @@ export async function getServerSideProps() {
       console.error(error)
     })
 
-  return { props: { links } }
+  return { props: { bookmarks } }
 }
