@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import styles from '../../styles/Home.module.css'
 import Layout from 'components/Layout'
 
+import { _debounce } from 'utils'
+
 import {
   Input,
   Button,
@@ -86,27 +88,32 @@ export default function Edit({ firebaseConfig }) {
     })
   }
 
-  const _debounce = (func, delay) => {
-    return function () {
-      const context = this
-      const args = arguments
-      clearTimeout(timer)
-      setTimer(
-        setTimeout(function () {
-          func.apply(context, args)
-        }, delay)
-      )
-    }
-  }
+  // const _debounce = (func, delay) => {
+  //   return function () {
+  //     const context = this
+  //     const args = arguments
+  //     clearTimeout(timer)
+  //     setTimer(
+  //       setTimeout(function () {
+  //         func.apply(context, args)
+  //       }, delay)
+  //     )
+  //   }
+  // }
 
   const handleChange = (e, type) => {
-    _debounce(() => {
-      const value = e.target.value
-      console.log(value)
-      const newSubmitData = { ...submitData }
-      newSubmitData[type] = value
-      setSubmitData(newSubmitData)
-    }, 500)()
+    _debounce(
+      () => {
+        const value = e.target.value
+        console.log(value)
+        const newSubmitData = { ...submitData }
+        newSubmitData[type] = value
+        setSubmitData(newSubmitData)
+      },
+      500,
+      timer,
+      setTimer
+    )()
   }
 
   return (

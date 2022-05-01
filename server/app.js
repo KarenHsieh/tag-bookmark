@@ -7,14 +7,19 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+const accountController = require('./accountController')
+
 app.prepare().then(() => {
   const server = new Koa()
   const router = new Router()
 
-  router.all('(.*)', async ctx => {
-    await handle(ctx.req, ctx.res)
-    ctx.respond = false
-  })
+  // router.all('(.*)', async ctx => {
+  //   await handle(ctx.req, ctx.res)
+  //   ctx.respond = false
+  // })
+
+  router.post('/api/register', accountController.register)
+  router.post('/api/authLogin', accountController.authLogin)
 
   server.use(async (ctx, next) => {
     ctx.res.statusCode = 200

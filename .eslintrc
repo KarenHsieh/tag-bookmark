@@ -7,6 +7,8 @@
     "next/core-web-vitals",
     "plugin:prettier/recommended",
     "prettier",
+    "prettier/react",
+    "plugin:react/recommended"
   ],
   "env": {
     "browser": true,
@@ -36,4 +38,3 @@
     "array-callback-return": 0
   }
 }
-

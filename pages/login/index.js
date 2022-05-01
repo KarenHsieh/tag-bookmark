@@ -18,31 +18,55 @@ import {
   InputRightElement,
 } from '@chakra-ui/react'
 
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+
 export default function Login() {
-  const [show, setShow] = useState(false)
-  const handleClick = () => setShow(!show)
+  const [account, setAccount] = useState('demo')
+  const [password, setPassword] = useState('demo')
+  const [pwShow, setPwShow] = useState(false)
+
+  const handleClick = () => setPwShow(!pwShow)
+
+  const login = () => {
+    const auth = getAuth()
+    signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        // Signed in
+        const user = userCredential.user
+        // ...
+      })
+      .catch(error => {
+        const errorCode = error.code
+        const errorMessage = error.message
+      })
+  }
+
   return (
     <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Heading fontSize={'4xl'}>Log in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+            to enjoy our features ✌️
           </Text>
         </Stack>
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
           <Stack spacing={4}>
-            <FormControl id="email">
+            <FormControl id="account">
+              <FormLabel>Account</FormLabel>
+              <Input type="account" value={account} />
+            </FormControl>
+            {/* <FormControl id="email">
               <FormLabel>Email address</FormLabel>
               <Input type="email" />
-            </FormControl>
+            </FormControl> */}
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
               <InputGroup size="md">
-                <Input pr="4.5rem" type={show ? 'text' : 'password'} placeholder="Enter password" />
+                <Input pr="4.5rem" type={pwShow ? 'text' : 'password'} placeholder="Enter password" value={password} />
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? 'Hide' : 'Show'}
+                    {pwShow ? 'Hide' : 'Show'}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -58,8 +82,9 @@ export default function Login() {
                 _hover={{
                   bg: 'blue.500',
                 }}
+                ocClick={login}
               >
-                Sign in
+                Log in
               </Button>
             </Stack>
           </Stack>

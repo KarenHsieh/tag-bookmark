@@ -8,3 +8,16 @@ export const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_API_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 }
+
+export const _debounce = (func, delay, timer, setTimer) => {
+  return function () {
+    const context = this
+    const args = arguments
+    clearTimeout(timer)
+    setTimer(
+      setTimeout(function () {
+        func.apply(context, args)
+      }, delay)
+    )
+  }
+}

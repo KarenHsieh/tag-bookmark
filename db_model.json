@@ -71,6 +71,12 @@
         "userId": "user2",
         "bookmarksId": 1
       }
+    ],
+    "ES6": [
+      {
+        "userId": "user1",
+        "bookmarksId": 2
+      }
     ]
   }
 }
